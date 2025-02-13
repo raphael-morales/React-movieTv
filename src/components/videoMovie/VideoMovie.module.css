@@ -1,0 +1,61 @@
+/*.title {*/
+/*    font-family: Roboto;*/
+/*    font-weight: 60px;*/
+/*    font-size: 20px;*/
+/*}*/
+
+.videoContainer {
+    flex: 1;
+}
+
+.sectionTitle {
+
+}
+
+.videoList {
+    display: flex;
+    width: 100vw - 25px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.videoItem{
+    margin-right: 20px;
+}
+
+.videoTitle {
+
+}
+
+.videoFrame {
+    cursor: pointer;
+    width: 300px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.videoList::-webkit-scrollbar {
+    height: 8px;
+}
+
+.videoList::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.videoList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.videoList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.videoList::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

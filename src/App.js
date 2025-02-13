@@ -8,11 +8,13 @@ import {Logo} from "./components/logo/Logo";
 import logo from './assets/images/logo.png';
 import {TvShowList} from "./components/tvShowList/TvShowList";
 import {SearchMovie} from "./components/searchMovie/SearchMovie";
+import {VideoMovie} from "./components/videoMovie/VideoMovie";
 
 function App() {
 
     const [currentTvShow, setCurrentTvShow] = useState();
     const [tvShowRecommendations, setTvShowRecommendations] = useState();
+    const [tvShowVideos, setTvShowVideos] = useState();
     const [categorySelected, setCategorySelected] = useState("tv");
     const [searchText, setSearchText] = useState("");
 
@@ -49,6 +51,13 @@ function App() {
         }
     }
 
+    async function getTvShowVideosById() {
+        const tvShowVideosById = await TvShowApi.fetchTVShowVideos(categorySelected,currentTvShow.id)
+        if (tvShowVideosById.length > 0) {
+            setTvShowVideos(tvShowVideosById.slice(0, 10))
+        }
+    }
+
     //UseEffet
     useEffect(() => {
         getTvShowPopular()
@@ -68,6 +77,12 @@ function App() {
         }
 
     }, [categorySelected])
+
+    useEffect(() => {
+        if (currentTvShow) {
+            getTvShowVideosById()
+        }
+    }, [currentTvShow])
 
     //Update useState
     function updateCurrentTvShow(currentTvShow) {
@@ -104,16 +119,22 @@ function App() {
                         <Logo logo={logo} title={'Movies TV'} subtitle={'All yours movies in the same site!!!'}/>
                     </div>
                     <div className="col-md-12 col-lg-4 d-flex align-items-center">
-                        { categorySelected && <SearchMovie valueSearch={searchText} onChangeItem={updatebySearchMovie} onChangeCategory={updateCategory}
-                                      category={categorySelected}/>}
+                        {categorySelected && <SearchMovie valueSearch={searchText} onChangeItem={updatebySearchMovie}
+                                                          onChangeCategory={updateCategory}
+                                                          category={categorySelected}/>}
                     </div>
                 </div>
             </div>
             <div className={s.tv_show_detail}>
-                { currentTvShow && <TvShowDetail tvShow={currentTvShow}/>}
+                {currentTvShow && <TvShowDetail tvShow={currentTvShow}/>}
             </div>
+            <>
+                {tvShowVideos &&
+                    <VideoMovie videos={tvShowVideos} />}
+            </>
             <div className={s.recommentations}>
-                { tvShowRecommendations && <TvShowList onItemClick={updateCurrentTvShow} recommendations={tvShowRecommendations}/>}
+                {tvShowRecommendations &&
+                    <TvShowList onItemClick={updateCurrentTvShow} recommendations={tvShowRecommendations}/>}
             </div>
         </div>
     );

@@ -18,6 +18,7 @@ function App() {
     const [tvShowVideos, setTvShowVideos] = useState();
     const [tvShowDetail, setTvShowDetail] = useState();
     const [tvShowPopular, setTvshowPopular] = useState();
+    const [tvShowCredits, setTvShowCredits] = useState();
     const [categorySelected, setCategorySelected] = useState("tv");
     const [searchText, setSearchText] = useState("");
 
@@ -61,6 +62,14 @@ function App() {
             setTvShowDetail(null)}
     }
 
+    async function getTvShowCreditsById() {
+        const tvShowCreditList = await TvShowApi.fetchTVShowCast(categorySelected, currentTvShow.id)
+        if (tvShowCreditList.length > 0) {
+            setTvShowCredits(tvShowCreditList)
+        }else{
+            setTvShowCredits(null)}
+    }
+
     //UseEffet
     useEffect(() => {
         getTvShowPopular()
@@ -71,6 +80,7 @@ function App() {
             getTvShowRecommandation(currentTvShow.id)
             getTvShowVideosById()
             getTvShowDetailById()
+            getTvShowCreditsById()
         }
     }, [currentTvShow])
 
@@ -125,11 +135,12 @@ function App() {
                 </div>
             </div>
             <div className={s.tv_show_detail}>
-                {currentTvShow && <TvShowDetail tvShow={currentTvShow}/>}
+                {currentTvShow && tvShowDetail && tvShowCredits &&
+                    <TvShowDetail tvShow={currentTvShow} tvShowDetail={tvShowDetail} tvShowCredits={tvShowCredits}/>}
             </div>
             <>
                 {tvShowVideos &&
-                    <VideoMovie videos={tvShowVideos} tvShowDetail={tvShowDetail}/>}
+                    <VideoMovie videos={tvShowVideos}/>}
             </>
             <div className={s.recommentations}>
                 <h5>Recommendations</h5>

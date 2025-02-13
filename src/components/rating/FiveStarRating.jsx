@@ -25,7 +25,6 @@ export function FiveStarRating({rating}) {
     return (
         <div>
             {StarsRating()} <br/>
-            <span>{rating}</span>
         </div>
     );
 }

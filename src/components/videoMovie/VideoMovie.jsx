@@ -1,21 +1,10 @@
 import s from './VideoMovie.module.css'
 
-export function VideoMovie({videos, tvShowDetail}) {
-    console.log(tvShowDetail)
-    var genres = "";
-
-    tvShowDetail.genres.forEach(genre => {
-        genres += genre.name + ", "
-    })
-    genres = genres.substring(0, genres.length - 2);
+export function VideoMovie({videos}) {
 
     return (
         <div className={s.videoContainer}>
              <h5 className={s.sectionTitle}>Videos</h5>
-            <span>
-                {tvShowDetail.number_of_seasons ? `Seasons: ${tvShowDetail.seasons.length} | ` : ""}
-                {genres}
-            </span>
              <div className={s.videoList}>
                  {videos.map((video) => (
                      <div key={video.id} className={s.videoItem}>

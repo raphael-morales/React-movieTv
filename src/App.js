@@ -15,6 +15,7 @@ function App() {
     const [currentTvShow, setCurrentTvShow] = useState();
     const [tvShowRecommendations, setTvShowRecommendations] = useState();
     const [tvShowVideos, setTvShowVideos] = useState();
+    const [tvShowDetail, setTvShowDetail] = useState();
     const [categorySelected, setCategorySelected] = useState("tv");
     const [searchText, setSearchText] = useState("");
 
@@ -55,7 +56,16 @@ function App() {
         const tvShowVideosById = await TvShowApi.fetchTVShowVideos(categorySelected,currentTvShow.id)
         if (tvShowVideosById.length > 0) {
             setTvShowVideos(tvShowVideosById.slice(0, 10))
-        }
+        }else{
+            setTvShowVideos(null)}
+    }
+
+    async function getTvShowDetailById() {
+        const currentTvShowDetail = await TvShowApi.fetchTvShowDetailsById(categorySelected, currentTvShow.id)
+        if (currentTvShowDetail) {
+            setTvShowDetail(currentTvShowDetail)
+        }else{
+            setTvShowDetail(null)}
     }
 
     //UseEffet
@@ -66,6 +76,8 @@ function App() {
     useEffect(() => {
         if (currentTvShow) {
             getTvShowRecommandation(currentTvShow.id)
+            getTvShowVideosById()
+            getTvShowDetailById()
         }
     }, [currentTvShow])
 
@@ -77,12 +89,6 @@ function App() {
         }
 
     }, [categorySelected])
-
-    useEffect(() => {
-        if (currentTvShow) {
-            getTvShowVideosById()
-        }
-    }, [currentTvShow])
 
     //Update useState
     function updateCurrentTvShow(currentTvShow) {
@@ -130,7 +136,7 @@ function App() {
             </div>
             <>
                 {tvShowVideos &&
-                    <VideoMovie videos={tvShowVideos} />}
+                    <VideoMovie videos={tvShowVideos} tvShowDetail={tvShowDetail} />}
             </>
             <div className={s.recommentations}>
                 {tvShowRecommendations &&

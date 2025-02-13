@@ -1,8 +1,10 @@
 .main_container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     padding: 25px;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
 }
 .header {
     flex: 1;

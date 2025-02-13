@@ -36,4 +36,15 @@ export class TvShowApi {
             return response.data;
         }
     }
+
+    //Obtenir une liste des séries à venir.
+    static async fetchUpcomingTVShows(category) {
+        const response = await axios.get(`${BASE_URL}${category}/on_the_air${API_KEY_PARAM}`);
+        return response.data.results;
+    }
+    //Obtenir la liste des acteurs d'une série.
+    static async fetchTVShowCast(category, tvShowId) {
+        const response = await axios.get(`${BASE_URL}${category}/${tvShowId}/credits${API_KEY_PARAM}`);
+        return response.data.cast;
+    }
 }

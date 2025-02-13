@@ -1,7 +1,7 @@
 import s from './VideoMovie.module.css'
 
 export function VideoMovie({videos, tvShowDetail}) {
-
+    console.log(tvShowDetail)
     var genres = "";
 
     tvShowDetail.genres.forEach(genre => {

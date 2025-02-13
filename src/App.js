@@ -9,6 +9,7 @@ import logo from './assets/images/logo.png';
 import {TvShowList} from "./components/tvShowList/TvShowList";
 import {SearchMovie} from "./components/searchMovie/SearchMovie";
 import {VideoMovie} from "./components/videoMovie/VideoMovie";
+import {TvShowUpcomingList} from "./components/tvShowUpcomingList/TvShowUpcomingList";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     const [tvShowRecommendations, setTvShowRecommendations] = useState();
     const [tvShowVideos, setTvShowVideos] = useState();
     const [tvShowDetail, setTvShowDetail] = useState();
+    const [tvShowPopular, setTvshowPopular] = useState();
     const [categorySelected, setCategorySelected] = useState("tv");
     const [searchText, setSearchText] = useState("");
 
@@ -24,23 +26,14 @@ function App() {
         const tvShowPopular = await TvShowApi.fetchPopular(categorySelected);
         if (tvShowPopular.length > 0) {
             setCurrentTvShow(tvShowPopular[0]);
+            setTvshowPopular(tvShowPopular.slice(1, 11));
         }
     }
 
     async function getTvShowRecommandation(TvShowId) {
-        switch (categorySelected) {
-            case "tv":
-                const tvShowRecommendationsSerie = await TvShowApi.fetchRecommendationsById(categorySelected,TvShowId);
-                if (tvShowRecommendationsSerie.length > 0) {
-                    setTvShowRecommendations(tvShowRecommendationsSerie.slice(0,10));
-                }
-                break;
-            case "movie":
-                const tvShowRecommendationsMovie = await TvShowApi.fetchRecommendationsById(categorySelected,TvShowId);
-                if (tvShowRecommendationsMovie.length > 0) {
-                    setTvShowRecommendations(tvShowRecommendationsMovie.slice(0, 10))
-                }
-                break;
+        const tvShowRecommendationsList = await TvShowApi.fetchRecommendationsById(categorySelected,TvShowId);
+        if (tvShowRecommendationsList.length > 0) {
+            setTvShowRecommendations(tvShowRecommendationsList.slice(0, 10))
         }
     }
 
@@ -136,11 +129,17 @@ function App() {
             </div>
             <>
                 {tvShowVideos &&
-                    <VideoMovie videos={tvShowVideos} tvShowDetail={tvShowDetail} />}
+                    <VideoMovie videos={tvShowVideos} tvShowDetail={tvShowDetail}/>}
             </>
             <div className={s.recommentations}>
+                <h5>Recommendations</h5>
                 {tvShowRecommendations &&
                     <TvShowList onItemClick={updateCurrentTvShow} recommendations={tvShowRecommendations}/>}
+            </div>
+            <div className={s.recommentations}>
+                <h5>Populars</h5>
+                {tvShowPopular &&
+                    <TvShowUpcomingList onItemClick={updateCurrentTvShow} populars={tvShowPopular}/>}
             </div>
         </div>
     );

@@ -101,7 +101,7 @@ function App() {
             <div className={s.header}>
                 <div className="row">
                     <div className="col-4">
-                        <Logo logo={logo} title={'Movies TV'} subtitle={'All yours movies in the same site'}/>
+                        <Logo logo={logo} title={'Movies TV'} subtitle={'All yours movies in the same site!!!'}/>
                     </div>
                     <div className="col-md-12 col-lg-4 d-flex align-items-center">
                         { categorySelected && <SearchMovie valueSearch={searchText} onChangeItem={updatebySearchMovie} onChangeCategory={updateCategory}
